@@ -110,7 +110,7 @@ class Readwise:
 
 
         return ReadwiseHighlight(
-            text=annot.text+append_text,
+            text="zotero2readwise-"+annot.text+append_text,
             title=annot.title,
             note=highlight_note,
             author=annot.creators,
