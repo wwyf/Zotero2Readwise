@@ -32,7 +32,6 @@ jobs:
       - name: Commit changes of version number
         uses: EndBug/add-and-commit@v9
         with:
-          author_name: wwyf
-          author_email: w.y.ff@163.com
+          default_author: github_actions
           message: 'update version number'
           add: 'zotero_version_number'
