@@ -33,6 +33,8 @@ class Zotero2Readwise:
         annots, notes = [], []
         if self.include_annots:
             annots = self.zotero.retrieve_all_annotations(self.version_number)
+        for annot in annots:
+            print(annot)
 
         if self.include_notes:
             notes = self.zotero.retrieve_all_annotations(self.version_number)

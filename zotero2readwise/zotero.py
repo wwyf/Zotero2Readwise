@@ -137,6 +137,7 @@ class ZoteroAnnotationsNotes:
             "tags": data["tags"],
             "document_type": data["itemType"],
             "source_url": top_item["links"]["alternate"]["href"],
+            "key": top_item_key,
         }
         if "creators" in data:
             metadata["creators"] = [
@@ -173,8 +174,11 @@ class ZoteroAnnotationsNotes:
         if text == "":
             raise ValueError("No annotation or note data is found.")
         item_tags = data["tags"]
-        if "readwise" in item_tags:
-            item_tags.remove("readwise")
+        print(item_tags)
+        filter_tag = {'tag':'readwise'}
+        if filter_tag in item_tags:
+            item_tags.remove(filter_tag)
+        print(item_tags)
         return ZoteroItem(
             key=data["key"],
             version=data["version"],
@@ -190,7 +194,8 @@ class ZoteroAnnotationsNotes:
             document_type=metadata["document_type"],
             annotation_type=annotation_type,
             creators=metadata.get("creators"),
-            source_url=metadata["source_url"],
+            # source_url=metadata["source_url"],
+            source_url="zotero://select/library/items/{}".format(metadata["key"]),
             page_label=data.get("annotationPageLabel"),
             color=data.get("annotationColor"),
             relations=data["relations"],
@@ -205,7 +210,9 @@ class ZoteroAnnotationsNotes:
         )
         for annot in annots:
             try:
-                formatted_annots.append(self.format_item(annot))
+                formatted_annot = self.format_item(annot)
+                print(formatted_annot)    
+                formatted_annots.append(formatted_annot)
             except:
                 self.failed_items.append(annot)
                 continue
