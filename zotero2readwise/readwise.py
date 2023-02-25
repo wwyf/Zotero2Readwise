@@ -41,6 +41,7 @@ class ReadwiseHighlight:
     location_type: Optional[str] = "page"
     highlighted_at: Optional[str] = None
     highlight_url: Optional[str] = None
+    citekey: Optional[str] = None
 
     def __post_init__(self):
         if not self.location:
@@ -103,8 +104,13 @@ class Readwise:
         else:
             location = 0
 
+        append_text = ""
+        if annot.citekey != None:
+            append_text = " [[@{}]]".format(annot.citekey)
+
+
         return ReadwiseHighlight(
-            text=annot.text,
+            text=annot.text+append_text,
             title=annot.title,
             note=highlight_note,
             author=annot.creators,
@@ -115,6 +121,7 @@ class Readwise:
             source_url=annot.source_url,
             highlight_url=annot.annotation_url,
             location=location,
+            citekey=annot.citekey
         )
 
     def post_zotero_annotations_to_readwise(

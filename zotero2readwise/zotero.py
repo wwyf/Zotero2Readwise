@@ -19,6 +19,7 @@ class ZoteroItem:
     annotation_url: str
     comment: Optional[str] = None
     title: Optional[str] = None
+    citekey: Optional[str] = None
     tags: Optional[List[str]] = field(init=True, default=None)
     document_tags: Optional[List[Dict]] = field(init=True, default=None)
     document_type: Optional[int] = None
@@ -125,6 +126,7 @@ class ZoteroAnnotationsNotes:
 
         if top_item_key:
             top_item = self.zot.item(top_item_key)
+            print("top_item: ", top_item)
             data = top_item["data"]
         else:
             top_item = parent_item
@@ -138,7 +140,19 @@ class ZoteroAnnotationsNotes:
             "document_type": data["itemType"],
             "source_url": top_item["links"]["alternate"]["href"],
             "key": top_item_key,
+            "citekey": None,
         }
+        print(data["extra"])
+        extra_items = data["extra"].split("\n")
+        print(extra_items)
+        for extra_item in extra_items:
+            if ("Citation Key" in extra_item):
+                metadata["citekey"] = extra_item.split(":")[1].strip()
+                break
+        # print(data["extra"]["Citation Key"])
+        print("citekey: " ,metadata["citekey"])
+
+            # "citekey": data["extra"]["Citation Key"],
         if "creators" in data:
             metadata["creators"] = [
                 creator["firstName"] + " " + creator["lastName"]
@@ -199,6 +213,7 @@ class ZoteroAnnotationsNotes:
             page_label=data.get("annotationPageLabel"),
             color=data.get("annotationColor"),
             relations=data["relations"],
+            citekey=metadata["citekey"],
         )
 
     def format_items(self, annots: List[Dict]) -> List[ZoteroItem]:
