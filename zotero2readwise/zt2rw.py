@@ -55,9 +55,10 @@ class Zotero2Readwise:
             zot_annots_notes = self.get_all_zotero_items()
 
         formatted_items = self.zotero.format_items(zot_annots_notes)
-        print(f"Latest_version_number : {self.latest_version_number}")
         if (self.latest_version_number == self.version_number):
-            # print("No new items to update")
+            print("No new items to update")
+            print(f"Latest_version_number : ")
+            print(f"{self.latest_version_number}")
             return
 
         if self.zotero.failed_items:
