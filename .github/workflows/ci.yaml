@@ -28,3 +28,11 @@ jobs:
 
       - name: 🚀 Run Automation
         run: /bin/bash ./auto.sh ${{ secrets.READWISE_TOKEN }} ${{ secrets.ZOTERO_KEY }} ${{ secrets.ZOTERO_ID }}
+      
+      - name: Commit changes of version number
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: wwyf
+          author_email: w.y.ff@163.com
+          message: 'update version number'
+          add: 'zotero_version_number'
