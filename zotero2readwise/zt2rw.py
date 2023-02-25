@@ -64,4 +64,5 @@ class Zotero2Readwise:
             self.zotero.save_failed_items_to_json("failed_zotero_items.json")
 
         self.readwise.post_zotero_annotations_to_readwise(formatted_items)
+        print(f"Latest_version_number : {self.latest_version_number}")
 
