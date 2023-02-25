@@ -92,8 +92,11 @@ class Readwise:
         self, annot: ZoteroItem
     ) -> ReadwiseHighlight:
 
+        item_tags = annot.tags
+        if "zotero2readwise" not in item_tags:
+            item_tags.append("zotero2readwise")
         highlight_note = self.format_readwise_note(
-            tags=annot.tags, comment=annot.comment
+            tags=item_tags, comment=annot.comment
         )
         if annot.page_label and annot.page_label.isnumeric():
             location = int(annot.page_label)

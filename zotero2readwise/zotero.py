@@ -172,16 +172,20 @@ class ZoteroAnnotationsNotes:
 
         if text == "":
             raise ValueError("No annotation or note data is found.")
+        item_tags = data["tags"]
+        if "readwise" in item_tags:
+            item_tags.remove("readwise")
         return ZoteroItem(
             key=data["key"],
             version=data["version"],
             item_type=item_type,
             text=text,
             annotated_at=data["dateModified"],
-            annotation_url=annot["links"]["alternate"]["href"],
+            # annotation_url=annot["links"]["alternate"]["href"],
+            annotation_url="zotero://open-pdf/library/items/{}?annotation={}".format(annot["data"]["parentItem"], annot["data"]["key"])
             comment=comment,
             title=metadata["title"],
-            tags=data["tags"],
+            tags=item_tags,
             document_tags=metadata["tags"],
             document_type=metadata["document_type"],
             annotation_type=annotation_type,
