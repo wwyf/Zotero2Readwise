@@ -182,7 +182,7 @@ class ZoteroAnnotationsNotes:
             text=text,
             annotated_at=data["dateModified"],
             # annotation_url=annot["links"]["alternate"]["href"],
-            annotation_url="zotero://open-pdf/library/items/{}?annotation={}".format(annot["data"]["parentItem"], annot["data"]["key"])
+            annotation_url="zotero://open-pdf/library/items/{}?annotation={}".format(annot["data"]["parentItem"], annot["data"]["key"]),
             comment=comment,
             title=metadata["title"],
             tags=item_tags,
