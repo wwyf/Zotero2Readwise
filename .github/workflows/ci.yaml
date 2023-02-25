@@ -26,7 +26,5 @@ jobs:
       - name: Install
         run: pip3 install pyzotero
 
-      # - name: 🚀 Run Automation
-        # run: python run.py ${{ secrets.READWISE_TOKEN }} ${{ secrets.ZOTERO_KEY }} ${{ secrets.ZOTERO_ID }} --version_number=12799
       - name: 🚀 Run Automation
-        run: /bin/bash ./auto.sh
+        run: /bin/bash ./auto.sh ${{ secrets.READWISE_TOKEN }} ${{ secrets.ZOTERO_KEY }} ${{ secrets.ZOTERO_ID }}
