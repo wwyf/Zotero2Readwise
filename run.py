@@ -17,6 +17,12 @@ if __name__ == "__main__":
         help="Zotero User ID (visit https://www.zotero.org/settings/keys)",
     )
     parser.add_argument(
+        "--version_number",
+        type=int,
+        default="0",
+        help="zotero library version number",
+    )
+    parser.add_argument(
         "--library_type",
         default="user",
         help="Zotero Library type ('user': for personal library (default value), 'group': for a shared library)",
@@ -33,7 +39,6 @@ if __name__ == "__main__":
         default="n",
         help="Include Zotero notes | Options: 'y'/'yes' (default), 'n'/'no'",
     )
-
     args = vars(parser.parse_args())
 
     # Cast str to bool values for bool flags
@@ -52,5 +57,6 @@ if __name__ == "__main__":
         zotero_library_type=args["library_type"],
         include_annotations=args["include_annotations"],
         include_notes=args["include_notes"],
+        version_number=args["version_number"]
     )
     zt2rw.run()

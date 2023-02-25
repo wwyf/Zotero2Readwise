@@ -227,13 +227,13 @@ class ZoteroAnnotationsNotes:
         print(f"\nZOTERO: Detail of failed items are saved into {out_filepath}\n")
 
 
-def retrieve_all_annotations(zotero_client: Zotero) -> List[Dict]:
-    print(
-        "Retrieving ALL annotations from Zotero Database. \nIt may take some time...\n"
-    )
-    return zotero_client.everything(zotero_client.items(itemType="annotation"))
-
-
-def retrieve_all_notes(zotero_client: Zotero) -> List[Dict]:
-    print("Retrieving ALL notes from Zotero Database. \nIt may take some time...\n")
-    return zotero_client.everything(zotero_client.items(itemType="note"))
+    def retrieve_all_annotations(self,version_number) -> List[Dict]:
+        print(
+            "Retrieving ALL annotations from Zotero Database. \nIt may take some time...\n"
+        )
+        return  self.zot.everything(self.zot.items(itemType="annotation",tag="readwise",since=version_number))
+    
+    
+    def retrieve_all_notes(self,version_number) -> List[Dict]:
+        print("Retrieving ALL notes from Zotero Database. \nIt may take some time...\n")
+        return self.zot.everything(self.zot.items(itemType="note",tag="readwise"),since=version_number)

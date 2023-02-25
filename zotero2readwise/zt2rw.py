@@ -4,8 +4,6 @@ from zotero2readwise.readwise import Readwise
 from zotero2readwise.zotero import (
     ZoteroAnnotationsNotes,
     get_zotero_client,
-    retrieve_all_annotations,
-    retrieve_all_notes,
 )
 
 
@@ -18,6 +16,7 @@ class Zotero2Readwise:
         zotero_library_type: str = "user",
         include_annotations: bool = True,
         include_notes: bool = False,
+        version_number: int = None
     ):
         self.readwise = Readwise(readwise_token)
         self.zotero_client = get_zotero_client(
@@ -28,14 +27,15 @@ class Zotero2Readwise:
         self.zotero = ZoteroAnnotationsNotes(self.zotero_client)
         self.include_annots = include_annotations
         self.include_notes = include_notes
+        self.version_number = version_number
 
     def get_all_zotero_items(self) -> List[Dict]:
         annots, notes = [], []
         if self.include_annots:
-            annots = retrieve_all_annotations(self.zotero_client)
+            annots = self.zotero.retrieve_all_annotations(self.version_number)
 
         if self.include_notes:
-            notes = retrieve_all_notes(self.zotero_client)
+            notes = self.zotero.retrieve_all_annotations(self.version_number)
 
         all_zotero_items = annots + notes
         print(f"{len(all_zotero_items)} Zotero items are retrieved.")
