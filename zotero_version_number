@@ -1,1 +1,1 @@
-Response: An error occurred
+run.py: error: argument --version_number: invalid int value: 'Response:'
