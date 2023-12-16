@@ -104,13 +104,8 @@ class Readwise:
         else:
             location = 0
 
-        append_text = ""
-        if annot.citekey != None:
-            append_text = " [[@{}]]".format(annot.citekey)
-
-
         return ReadwiseHighlight(
-            text=annot.text+append_text,
+            text=annot.text,
             title="zotero2readwise-"+annot.title,
             note=highlight_note,
             author=annot.creators,

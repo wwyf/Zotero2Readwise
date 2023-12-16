@@ -142,6 +142,17 @@ class ZoteroAnnotationsNotes:
             "key": top_item_key,
             "citekey": None,
         }
+        # if paper is a conference papers
+        conf_str = ""
+        if data["itemType"] == "conferencePaper":
+            if "series" in data and data["series"] != "":
+                conf_str = data["series"]
+                metadata["tags"].append({"tag": data["series"]})
+            if "conferenceName" in data:
+                conf_str = conf_str + " ;" + data["conferenceName"]
+            elif "proceedingsTitle" in data:
+                conf_str = conf_str + " ;" + data["proceedingsTitle"]
+        metadata["conf_str"] = conf_str
         print(data["extra"])
         extra_items = data["extra"].split("\n")
         print(extra_items)
@@ -187,6 +198,13 @@ class ZoteroAnnotationsNotes:
 
         if text == "":
             raise ValueError("No annotation or note data is found.")
+
+        append_text = ""
+        if "citekey" in metadata:
+            append_text = " [[@{}]]".format(metadata["citekey"])
+        if "conf_str" in metadata and metadata["conf_str"] != "":
+            append_text = append_text + "\n\n" + metadata["conf_str"]
+
         item_tags = data["tags"]
         print(item_tags)
         filter_tag = {'tag':'readwise'}
@@ -197,7 +215,7 @@ class ZoteroAnnotationsNotes:
             key=data["key"],
             version=data["version"],
             item_type=item_type,
-            text=text,
+            text=text + append_text,
             annotated_at=data["dateModified"],
             # annotation_url=annot["links"]["alternate"]["href"],
             annotation_url="zotero://open-pdf/library/items/{}?annotation={}".format(annot["data"]["parentItem"], annot["data"]["key"]),
