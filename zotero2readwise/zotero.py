@@ -200,7 +200,7 @@ class ZoteroAnnotationsNotes:
             raise ValueError("No annotation or note data is found.")
 
         append_text = ""
-        if "citekey" in metadata:
+        if "citekey" in metadata and metadata["citekey"] != None:
             append_text = " [[@{}]]".format(metadata["citekey"])
         if "conf_str" in metadata and metadata["conf_str"] != "":
             append_text = append_text + "\n\n" + metadata["conf_str"]
